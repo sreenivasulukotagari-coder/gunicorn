@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mini Travel Chatbot</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="chat">
+    <h2>🧳 Travel Chatbot</h2>
+    <div id="messages"></div>
+
+    <input type="text" id="input" placeholder="Type your travel plan..."
+           onkeydown="if(event.key==='Enter') sendMessage()">
+
+    <button onclick="startVoice()">🎤</button>
+</div>
+
+<script>
+function sendMessage(){
+    let input = document.getElementById("input");
+    let msg = input.value;
+    if(!msg) return;
+
+    document.getElementById("messages").innerHTML +=
+        `<p><b>You:</b> ${msg}</p>`;
+
+    fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({message: msg})
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("messages").innerHTML +=
+            `<p><b>Bot:</b> ${data.reply}</p>`;
+    });
+
+    input.value = "";
+}
+
+function startVoice(){
+    let rec = new webkitSpeechRecognition();
+    rec.lang = "en-IN";
+    rec.onresult = e => {
+        document.getElementById("input").value = e.results[0][0].transcript;
+        sendMessage();
+    };
+    rec.start();
+}
+</script>
+
+</body>
+</html>

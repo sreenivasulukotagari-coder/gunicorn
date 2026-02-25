@@ -1,0 +1,28 @@
+body{
+    font-family: Arial;
+    background: linear-gradient(135deg,#c3ecff,#fefefe);
+}
+
+.chat{
+    width: 350px;
+    margin: 50px auto;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+#messages{
+    height: 250px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+input{
+    width: 75%;
+    padding: 8px;
+}
+
+button{
+    padding: 8px;
+}
